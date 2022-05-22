@@ -7,8 +7,9 @@ from core.options.optparse import parse_option
 
 
 def main():
-    init()
     options = parse_option()
+    init(options)
+
     project_path = options.project
     if not isinstance(project_path, str): return
     database_name = project_path[project_path.rindex('\\\\') + 2:]

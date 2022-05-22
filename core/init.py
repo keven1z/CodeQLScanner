@@ -26,22 +26,23 @@ def file_check():
         os.makedirs(DATABASE_PATH)
 
 
-def init():
+def init(option):
     file_check()
-    env_check()
+    env_check(option)
 
-def env_check():
+
+def env_check(option):
     try:
         bin_check()
     except CodeQLBinNotFoundError:
         logger.info("没有发现CodeQL Cli bin")
-        get_CodeQL(CODEQL_BIN_DOWNLOAD_URL, CODEQL_BIN)
+        get_CodeQL(CODEQL_BIN_DOWNLOAD_URL, CODEQL_BIN, proxy=option.proxy)
 
     try:
         cli_check()
     except CodeQLCLiNotFoundError:
         logger.info("没有发现CodeQL Cli library")
-        get_CodeQL(CODEQL_CLI_DOWNLOAD_URL, CODEQL_CLI)
+        get_CodeQL(CODEQL_CLI_DOWNLOAD_URL, CODEQL_CLI,proxy=option.proxy)
 
 
 def bin_check():

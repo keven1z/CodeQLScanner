@@ -10,24 +10,28 @@ from core.log.log_util import LogUtil as log
 logger = log.getLogger(__name__)
 
 
-def get_CodeQL(url, file_name):
+def get_CodeQL(url, file_name, proxy=None):
     try:
         logger.info(f"正在下载{file_name}.zip")
-        _download(url, f"{file_name}.zip")
+        _download(url, f"{file_name}.zip", proxy)
         _unzip(f"{RUN_CODEQL_ROOT_PATH}/{file_name}.zip", f"{RUN_CODEQL_ROOT_PATH}")
     except Exception as e:
         raise DownloadCodeQLError(e)
 
 
-def _download(url, download_file):
+def _download(url, download_file, proxy=None):
     """
     下载文件
     :param url: 下载文件url
     :param download_file: 下载文件的路径
     """
-    proxies = {
-        "http": "http://127.0.0.1:41091",
-    }
+    if proxy is None:
+        proxies = None
+    else:
+        proxies = {
+            "http": proxy,
+        }
+
     try:
         response = requests.get(url, stream=True, proxies=proxies)
     except ConnectionError as e:

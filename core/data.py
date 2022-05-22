@@ -11,3 +11,5 @@ COMMAND_CREATE_PROJECT_PATH_REPLACE_FLAG = "%p"
 
 CODEQL_BIN = "codeql"
 CODEQL_CLI = "codeql-codeql-cli-latest"
+
+proxy = ''

@@ -14,6 +14,8 @@ def parse_option():
     parser.add_argument("-ql", dest="ql", help="Please specify a ql rule path to query", required=True)
     parser.add_argument("-p", "--project", dest="project", help="Please specify a project absolute path to scan",
                         required=True)
+    parser.add_argument("--proxy", dest="proxy", help="set proxy for downloading file")
+
     parser.add_argument("-l", "--list", dest="list", help="List all query rules")
 
     options = parser.parse_args()
@@ -22,6 +24,7 @@ def parse_option():
 
     option.ql = ql
     option.project = options.project
+    option.proxy = options.proxy
     return option
 
 
@@ -30,6 +33,7 @@ class Option(object):
         self._ql = None
         self._project = None
         self._list = None
+        self._proxy = None
 
     @property
     def ql(self):
@@ -54,3 +58,11 @@ class Option(object):
     @list.setter
     def list(self, value):
         self._list = value
+
+    @property
+    def proxy(self):
+        return self._proxy
+
+    @proxy.setter
+    def proxy(self, value):
+        self._proxy = value
