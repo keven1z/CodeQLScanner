@@ -20,8 +20,4 @@ venv
 
 ### test
 tests
-output
-database
-run
-logs
 .idea
