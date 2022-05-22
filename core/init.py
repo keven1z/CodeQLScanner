@@ -9,9 +9,26 @@ from core.log.log_util import LogUtil as log
 logger = log.getLogger(__name__)
 
 
-def init():
-    env_check()
+def file_check():
+    '''
+    检测关键文件夹的创建
+    '''
 
+    if not os.path.isdir(RUN_CODEQL_ROOT_PATH):
+        os.makedirs(RUN_CODEQL_ROOT_PATH)
+    if not os.path.isdir(LOGS_PATH):
+        os.makedirs(LOGS_PATH)
+
+    if not os.path.isdir(OUTPUT_PATH):
+        os.makedirs(OUTPUT_PATH)
+
+    if not os.path.isdir(DATABASE_PATH):
+        os.makedirs(DATABASE_PATH)
+
+
+def init():
+    file_check()
+    env_check()
 
 def env_check():
     try:
