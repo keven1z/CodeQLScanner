@@ -12,9 +12,9 @@ def main():
 
     project_path = options.project
     if not isinstance(project_path, str): return
-    database_name = project_path[project_path.rindex('\\\\') + 2:]
+    database_name = project_path[project_path.rindex('/') + 1:]
     command = Commands()
-    command.create(database_name, project_path)
+    result = command.create(database_name, project_path)
     database_path = f"{ROOT_PATH}/database/{database_name}"
     ql_path = f"{RUN_CODEQL_LIB_PATH}/{options.ql}"
     command.analyze(database_path, ql_path)
