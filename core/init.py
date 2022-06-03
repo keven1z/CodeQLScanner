@@ -5,7 +5,9 @@ from core.config import *
 from core.data import *
 from core.exception.env import CodeQLBinNotFoundError, CodeQLCLiNotFoundError
 from core.log.log_util import LogUtil as log
-
+from core.options.optparse import parse_option
+from core.codeql.bean import CodeQLBean
+from core.options.print import walk_dir
 logger = log.getLogger(__name__)
 
 
@@ -26,9 +28,38 @@ def file_check():
         os.makedirs(DATABASE_PATH)
 
 
-def init(option):
+def init():
+    codeQLbean, options = init_options()
     file_check()
-    env_check(option)
+    env_check(options)
+    return codeQLbean
+
+
+def init_options():
+    '''
+    初始化选项
+    '''
+    options = parse_option()
+    project_path = options.project
+    
+    
+    '''
+    -l:打印所有存在的ql查询
+    '''
+    if options.list:
+        ql_files = walk_dir(RUN_CODEQL_LIB_PATH)
+        for _ in ql_files:
+            print(_)
+        exit(1)
+
+    if not isinstance(project_path, str):
+        logger.error(f"输入参数类型错误：{project_path}")
+        exit(-1)
+
+    database_name = project_path[project_path.rindex('/') + 1:]
+    database_path = f"{ROOT_PATH}/database/{database_name}"
+    #ql_path = f"{RUN_CODEQL_LIB_PATH}/{options.ql}"
+    return CodeQLBean(options.ql, database_path, database_name, project_path), options
 
 
 def env_check(option):
@@ -42,7 +73,7 @@ def env_check(option):
         cli_check()
     except CodeQLCLiNotFoundError:
         logger.info("没有发现CodeQL Cli library")
-        get_CodeQL(CODEQL_CLI_DOWNLOAD_URL, CODEQL_CLI,proxy=option.proxy)
+        get_CodeQL(CODEQL_CLI_DOWNLOAD_URL, CODEQL_CLI, proxy=option.proxy)
 
 
 def bin_check():

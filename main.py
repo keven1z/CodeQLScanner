@@ -1,23 +1,17 @@
 import sys
 
 from core.command import Commands
-from core.config import RUN_CODEQL_LIB_PATH, ROOT_PATH
+from core.config import RUN_CODEQL_BIN_PATH, RUN_CODEQL_LIB_PATH, ROOT_PATH
 from core.init import init
-from core.options.optparse import parse_option
+from core.options.print import walk_dir
 
 
 def main():
-    options = parse_option()
-    init(options)
 
-    project_path = options.project
-    if not isinstance(project_path, str): return
-    database_name = project_path[project_path.rindex('\\\\') + 2:]
+    codeQLbean = init()
     command = Commands()
-    command.create(database_name, project_path)
-    database_path = f"{ROOT_PATH}/database/{database_name}"
-    ql_path = f"{RUN_CODEQL_LIB_PATH}/{options.ql}"
-    command.analyze(database_path, ql_path)
+    result = command.create(codeQLbean.database_name, codeQLbean.project_path)
+    command.analyze(codeQLbean.database_path, codeQLbean.ql_path)
 
 
 def _main():

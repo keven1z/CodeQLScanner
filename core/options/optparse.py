@@ -1,5 +1,6 @@
 import argparse
 import sys
+from xmlrpc.client import boolean
 
 '''
 options:
@@ -11,12 +12,11 @@ options:
 
 def parse_option():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-ql", dest="ql", help="Please specify a ql rule path to query", required=True)
-    parser.add_argument("-p", "--project", dest="project", help="Please specify a project absolute path to scan",
-                        required=True)
-    parser.add_argument("--proxy", dest="proxy", help="set proxy for downloading file")
+    parser.add_argument("-ql", dest="ql", help="Please specify a ql rule path to query")
+    parser.add_argument("-p", "--project", dest="project", help="Please specify a project absolute path to scan")
+    parser.add_argument("--proxy", dest="proxy", help="Set proxy for downloading CodeQL dependent file")
 
-    parser.add_argument("-l", "--list", dest="list", help="List all query rules")
+    parser.add_argument("-l", "--list", dest="list",action='store_true', help="Holds if list all query rules")
 
     options = parser.parse_args()
     option = Option()
@@ -25,6 +25,7 @@ def parse_option():
     option.ql = ql
     option.project = options.project
     option.proxy = options.proxy
+    option.list = options.list
     return option
 
 

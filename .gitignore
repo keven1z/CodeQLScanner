@@ -25,3 +25,4 @@ database
 run
 logs
 .idea
+__pycache__
