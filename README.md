@@ -10,7 +10,7 @@
 git clone https://github.com/keven1z/CodeQLScanner.git
 cd CodeQLScanner
 pip install requirements.txt
-python main.py -p {项目绝对路径} -ql {查询规则相对java/ql/src/Security路径}
+python main.py -p {项目绝对路径} -ql {查询规则绝对路径}
 ```
 
 ```
