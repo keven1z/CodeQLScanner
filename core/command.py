@@ -62,4 +62,3 @@ class Commands(object):
                                 stdout=subprocess.PIPE)  # 当命令是错误的时候，返回的状态码就不是0了
         # print("result: %s" % ret2.stdout.decode("gbk"))
         return result
-
