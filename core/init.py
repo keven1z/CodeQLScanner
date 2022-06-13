@@ -52,7 +52,7 @@ def init_options():
             print(_)
         exit(1)
 
-    if not isinstance(project_path, str):
+    if project_path is not None and not isinstance(project_path, str):
         logger.error(f"输入参数类型错误：{project_path}")
         exit(-1)
 
